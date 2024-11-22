@@ -1,0 +1,10 @@
+spring:
+  cloud:
+    aws:
+      s3:
+        enabled: false
+aws:
+  access-key-id:
+  secret-key:
+  region: ap-northeast-1
+  endpoint:

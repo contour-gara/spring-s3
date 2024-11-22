@@ -9,10 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class SpringS3ApplicationTest {
     @Autowired
-    Temp temp;
+    S3Repository s3Repository;
 
     @Test
     void contextLoads() {
-        assertThat(temp).isNotNull();
+        assertThat(s3Repository).isNotNull();
     }
 }
