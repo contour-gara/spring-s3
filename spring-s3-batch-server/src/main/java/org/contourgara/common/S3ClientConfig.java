@@ -1,4 +1,4 @@
-package org.contourgara;
+package org.contourgara.common;
 
 import java.net.URI;
 import lombok.RequiredArgsConstructor;

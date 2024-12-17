@@ -1,4 +1,4 @@
-package org.contourgara;
+package org.contourgara.infrastructure;
 
 import static org.assertj.core.api.Assertions.*;
 

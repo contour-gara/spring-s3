@@ -1,4 +1,4 @@
-package org.contourgara;
+package org.contourgara.infrastructure;
 
 import io.vavr.control.Either;
 import lombok.RequiredArgsConstructor;

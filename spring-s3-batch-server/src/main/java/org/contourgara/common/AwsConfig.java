@@ -1,4 +1,4 @@
-package org.contourgara;
+package org.contourgara.common;
 
 import lombok.Getter;
 import lombok.Setter;
