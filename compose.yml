@@ -1,0 +1,23 @@
+services:
+  batch-server:
+    build:
+      context: ./spring-s3-batch-server
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+      - "5005:5005"
+    networks:
+      - spring-s3-nw
+    healthcheck:
+      test: "curl -f http://localhost:8080/actuator/health || exit 1"
+      interval: 5s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    environment:
+      SPRING_PROFILES_ACTIVE: default
+      AWS_REGION: ap-northeast-1
+
+networks:
+  spring-s3-nw:
+    driver: bridge
