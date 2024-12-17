@@ -35,7 +35,7 @@ class S3RepositoryLocalStackTest {
         registry.add("aws.access-key-id", localStackContainer::getAccessKey);
         registry.add("aws.secret-key", localStackContainer::getSecretKey);
         registry.add("aws.region", localStackContainer::getRegion);
-        registry.add("aws.endpoint", localStackContainer::getEndpoint);
+        registry.add("aws.s3.endpoint", localStackContainer::getEndpoint);
     }
 
     @Autowired

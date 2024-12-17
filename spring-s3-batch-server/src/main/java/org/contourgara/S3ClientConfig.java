@@ -28,12 +28,11 @@ public class S3ClientConfig {
     @Scope("prototype")
     @Profile({"localstack"})
     public S3Client createLocalstackClient() {
-        System.out.println("localstack!!!");
         return S3Client.builder()
                 .credentialsProvider(() -> AwsBasicCredentials.create(awsConfig.getAccessKeyId(), awsConfig.getSecretKey()))
                 .region(Region.of(awsConfig.getRegion()))
                 .forcePathStyle(true)
-                .endpointOverride(URI.create(awsConfig.getEndpoint()))
+                .endpointOverride(URI.create(awsConfig.getS3().getEndpoint()))
                 .build();
     }
 }

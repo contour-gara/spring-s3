@@ -1,15 +1,23 @@
 package org.contourgara;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(prefix = "aws")
-@Data
+@Getter
+@Setter
 public class AwsConfig {
     private String accessKeyId;
     private String secretKey;
     private String region;
-    private String endpoint;
+    private final S3 s3 = new S3();
+
+    @Getter
+    @Setter
+    static class S3 {
+        private String endpoint;
+    }
 }

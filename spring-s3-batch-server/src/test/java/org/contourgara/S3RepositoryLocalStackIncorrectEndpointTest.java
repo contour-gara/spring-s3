@@ -26,7 +26,7 @@ class S3RepositoryLocalStackIncorrectEndpointTest {
         registry.add("aws.access-key-id", localStackContainer::getAccessKey);
         registry.add("aws.secret-key", localStackContainer::getSecretKey);
         registry.add("aws.region", localStackContainer::getRegion);
-        registry.add("aws.endpoint", () -> "http://incorrect");
+        registry.add("aws.s3.endpoint", () -> "http://incorrect");
     }
 
     @Autowired

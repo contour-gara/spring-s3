@@ -32,7 +32,7 @@ class S3RepositoryFixedLocalStackTest {
         registry.add("aws.access-key-id", () -> "dummy");
         registry.add("aws.secret-key", () -> "dummy");
         registry.add("aws.region", () -> "ap-northeast-1");
-        registry.add("aws.endpoint", () -> "http://localhost:14566");
+        registry.add("aws.s3.endpoint", () -> "http://localhost:14566");
     }
 
     @Autowired
