@@ -1,0 +1,59 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - 'main'
+    paths-ignore:
+      - '.github/CODEOWNERS'
+      - '.gitignore'
+      - 'LICENSE.md'
+      - 'README.md'
+
+env:
+  TZ: 'Asia/Tokyo'
+
+jobs:
+  unit_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+
+      - name: Set up Java
+        uses: actions/setup-java@v4.5.0
+        with:
+          distribution: 'corretto'
+          java-version: '21'
+          cache: 'maven'
+
+      - name: Run unit test
+        working-directory: spring-s3-batch-server
+        run: mvn clean test
+
+  build_and_upload_jar_file:
+    needs:
+      - unit_test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+
+      - name: Set up Java
+        uses: actions/setup-java@v4.5.0
+        with:
+          distribution: 'corretto'
+          java-version: '21'
+          cache: 'maven'
+
+      - name: Build jar file
+        working-directory: spring-s3-batch-server
+        run: mvn clean package -Dmaven.test.skip=true
+
+      - name: Upload Dockerfile and jar file
+        uses: actions/upload-artifact@v4.4.3
+        with:
+          name: jar-and-Dockerfile
+          path: |
+            # spring-s3-batch-server/Dockerfile
+            spring-s3-batch-server/target/spring-s3-batch-server-1.0-SNAPSHOT.jar
