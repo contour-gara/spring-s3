@@ -9,7 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>spring-s3-app-server</artifactId>
+    <artifactId>spring-s3-batch-server</artifactId>
 
     <properties>
         <java.version>21</java.version>
