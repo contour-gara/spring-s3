@@ -41,7 +41,9 @@ class S3RepositoryFixedLocalStackTest {
     @BeforeEach
     void setUp() {
         localStackContainer.stop();
-        localStackContainer.start();
+        while (!localStackContainer.isHealthy()) {
+            localStackContainer.start();
+        }
     }
 
     @Test
