@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class DailySummaryUseCase {
     public Either<Error, String > execute() {
-        return null;
+        return Either.right(null);
     }
 
     public sealed interface Error permits FindError, UplocddError {

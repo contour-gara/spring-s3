@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 public class SpringS3ApplicationRunner implements ApplicationRunner {
     private final DailySummaryUseCase dailySummaryUseCase;
 
+    @Override
     public void run(ApplicationArguments args) {
         log.info("Execute Batch");
         dailySummaryUseCase.execute()
