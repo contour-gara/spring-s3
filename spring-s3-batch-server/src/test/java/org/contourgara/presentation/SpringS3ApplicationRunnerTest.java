@@ -1,24 +1,48 @@
 package org.contourgara.presentation;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import io.vavr.control.Either;
 import org.contourgara.application.DailySummaryUseCase;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-@SpringBootTest
 class SpringS3ApplicationRunnerTest {
-    @MockitoBean
+    @Mock
     DailySummaryUseCase dailySummaryUseCase;
 
-    @Autowired
+    @InjectMocks
     SpringS3ApplicationRunner sut;
 
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
+
     @Test
-    void 起動時に実行されユースケースが呼ばれる() {
+    void 実行時にユースケースが呼ばれる() {
+        // set up
+        doReturn(Either.right(null)).when(dailySummaryUseCase).execute();
+
+        // execute
+        sut.run(null);
+
         // assert
         verify(dailySummaryUseCase, times(1)).execute();
+    }
+
+    @Test
+    void ユースケースで予期するエラーが発生した場合例外を返す() {
+        // set up
+        doReturn(Either.left(new DailySummaryUseCase.FindError(new RuntimeException("message")))).when(dailySummaryUseCase).execute();
+
+        // execute & assert
+        assertThatThrownBy(() -> sut.run(null))
+                .isInstanceOf(SpringS3ApplicationRunner.DailySummaryUseCaseErrorException.class)
+                .hasMessage("message");
     }
 }

@@ -15,6 +15,16 @@ public class SpringS3ApplicationRunner implements ApplicationRunner {
 
     public void run(ApplicationArguments args) {
         log.info("Execute Batch");
-        dailySummaryUseCase.execute();
+        dailySummaryUseCase.execute()
+                .getOrElseThrow(DailySummaryUseCaseErrorException::new);
+    }
+
+    public static class DailySummaryUseCaseErrorException extends RuntimeException {
+        private final DailySummaryUseCase.Error dailySummaryUseCaseError;
+
+        public DailySummaryUseCaseErrorException(DailySummaryUseCase.Error dailySummaryUseCaseError) {
+            super(dailySummaryUseCaseError.exception().getMessage());
+            this.dailySummaryUseCaseError = dailySummaryUseCaseError;
+        }
     }
 }
