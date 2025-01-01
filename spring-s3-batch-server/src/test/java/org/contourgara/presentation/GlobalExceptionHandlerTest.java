@@ -39,7 +39,7 @@ class GlobalExceptionHandlerTest {
     }
 
     @Test
-    void バッチで例外が発生した場合ログが出力される() throws Exception {
+    void バッチで予期しない例外が発生した場合ログが出力される() throws Exception {
         // set up
         doThrow(new RuntimeException("message")).when(target).run(null);
 
