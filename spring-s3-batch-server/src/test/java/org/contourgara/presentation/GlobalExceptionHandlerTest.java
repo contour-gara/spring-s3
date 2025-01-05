@@ -7,6 +7,7 @@ import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.classic.spi.LoggingEvent;
 import ch.qos.logback.core.Appender;
+import org.contourgara.application.DailySummaryUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -36,6 +37,22 @@ class GlobalExceptionHandlerTest {
         AspectJProxyFactory factory = new AspectJProxyFactory(target);
         factory.addAspect(new GlobalExceptionHandler());
         springS3ApplicationRunner = factory.getProxy();
+    }
+
+    @Test
+    void バッチで予期する例外が発生した場合ログが出力される() throws Exception {
+        // set up
+        doThrow(new SpringS3ApplicationRunner.DailySummaryUseCaseErrorException(new DailySummaryUseCase.ValidationError("message")))
+                .when(target)
+                .run(null);
+
+        // execute
+        springS3ApplicationRunner.run(null);
+
+        // assert
+        verify(appender, times(1)).doAppend(argumentCaptor.capture());
+        assertThat(argumentCaptor.getValue().getLevel()).hasToString("ERROR");
+        assertThat(argumentCaptor.getValue().getMessage()).isEqualTo("message");
     }
 
     @Test

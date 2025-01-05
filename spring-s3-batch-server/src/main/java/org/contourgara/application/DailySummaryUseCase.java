@@ -9,11 +9,10 @@ public class DailySummaryUseCase {
         return Either.right(null);
     }
 
-    public sealed interface Error permits FindError, UplocddError {
-        Exception exception();
+    public sealed interface Error permits FindError, UplocddError, ValidationError {
+        String message();
     }
-
-    public record FindError(Exception exception) implements Error {}
-
-    public record UplocddError(Exception exception) implements Error {}
+    public record FindError(String message) implements Error {}
+    public record UplocddError(String message) implements Error {}
+    public record ValidationError(String message) implements Error {}
 }

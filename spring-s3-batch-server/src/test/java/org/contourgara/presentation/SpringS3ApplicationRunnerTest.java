@@ -38,7 +38,7 @@ class SpringS3ApplicationRunnerTest {
     @Test
     void ユースケースで予期するエラーが発生した場合例外を返す() {
         // set up
-        doReturn(Either.left(new DailySummaryUseCase.FindError(new RuntimeException("message")))).when(dailySummaryUseCase).execute();
+        doReturn(Either.left(new DailySummaryUseCase.FindError("message"))).when(dailySummaryUseCase).execute();
 
         // execute & assert
         assertThatThrownBy(() -> sut.run(null))
