@@ -10,5 +10,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>spring-s3-batch-server</module>
+        <module>integration-test</module>
     </modules>
 </project>
